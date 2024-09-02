@@ -1,0 +1,31 @@
+{% extends "./inc/base.html" %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="form bg-primary rounded p-5">
+      <div class="head mb-4">
+          <h1 class="text-center border-buttom">Login</h1>
+      </div>
+        <form action="{% url "loginpage" %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group ">
+              <label for="register_number">Register Number : </label>
+              <input type="number" class="form-control" name="register_number" id="regNo" placeholder="Enter Your Register Number" required>
+            </div>
+              
+
+            <div class="form-group ">
+              <label for="password">Password : </label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your password" required>
+            </div>
+
+            <h6>You dont Regsiter..Please Register <a href="{% url "registerpage" %}" class="text-secondary h5">Sign in</a></h6>
+
+            <div class=" text-center mt-3">
+                <button type="submit" class="btn btn-success">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
