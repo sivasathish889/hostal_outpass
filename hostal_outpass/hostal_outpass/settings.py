@@ -70,12 +70,12 @@ WSGI_APPLICATION = 'hostal_outpass.wsgi.application'
 
 DATABASES = {
      'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME' :   'hostal_outpass',
-        'USER' : 'root',
-        'PASSWORD' : 'password',
-        'HOST' : 'localhost',
-        'PORT' : '3308'
+        'HOST' : 'bvpe7w43rjx33pucohrh-mysql.services.clever-cloud.com',
+        'ENGINE': 'mysql.connector.django',
+        'NAME' :   'bvpe7w43rjx33pucohrh',
+        'USER' : 'uzrbzikun7roypcv',
+        'PASSWORD' : 'NlSeLPmg7oyrhvaHTPod',
+        'PORT' : '3306',
     }
 }
 

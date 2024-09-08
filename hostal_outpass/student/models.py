@@ -5,10 +5,10 @@ from django.utils.timezone import localtime
 class RegisterModel(models.Model):
 
     class yearChoice(models.IntegerChoices):
-        First = 1, "First Year"
-        Second = 2, "Second Year"
-        Third = 3, "Third Year"
-        Fouth = 4, "Final Year"
+        1, "First Year",
+        2, "Second Year",
+        3, "Third Year",
+        4, "Final Year",
     id = models.BigAutoField(blank=False, primary_key=True)
     name = models.CharField(max_length=150, blank=False, null=False)
     register_number = models.BigIntegerField(unique=True, blank=False, null=False)
@@ -27,9 +27,9 @@ class RegisterModel(models.Model):
     
 class RequestModel(models.Model):
     class actionChoice(models.IntegerChoices):
-        Pending = 1, 'Pending'
-        Accept = 2, 'Accepted'
-        Reject = 3, 'Rejected'
+        1, 'Pending',
+        2, 'Accepted',
+        3, 'Rejected',
 
     user = models.BigIntegerField(blank=False,null=False)
     regNo = models.BigIntegerField(blank=False,null=False)
