@@ -1,20 +1,28 @@
 {% extends "warden/inc/base.html" %}
 
 {% block content %}
+{% include "warden/inc/messages.html" %}
 <div class="form">
-    <form action="{% url "wardenloginpage" %}">
-        <div class="container ">
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" >
-                </div>
-                <div class="col-md-6">
-                    <label for="password">Password</label>
-                    <input type="text" name="password" >
-                </div>
+        <div class="wrapper">          
+            <div class="text-center mt-4 mb-5 name">
+                Warden
             </div>
+            <form class="p-3 mt-3" action="{% url "wardenloginpage" %}" method="POST">
+                {% csrf_token %}
+                <div class="form-field d-flex align-items-center">
+                    <span class="far fa-user"></span>
+                    <input type="text" name="username" id="username" placeholder="username">
+                </div>
+                <div class="form-field d-flex align-items-center">
+                    <span class="fas fa-key"></span>
+                    <input type="password" name="password" id="pwd" placeholder="Password">
+                </div>
+                <button class="btn mt-5" type="submit">Login</button>
+                
+            </form>
+            {% comment %} <div class="text-center fs-6">
+                <a href="#">Forget password?</a> or <a href="#">Sign up</a>
+            </div> {% endcomment %}
         </div>
-    </form>
 </div>
 {% endblock content %}

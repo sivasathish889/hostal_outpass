@@ -4,13 +4,13 @@
 <title>Student</title>
 {% endblock title %}
 {% block content %}
-{% include "./inc/navbar.html" %}
+{% include "student/inc/navbar.html" %}
+{% include "student/inc/messages.html" %}
 {% load tz %}
-<div class="container">
-    <div class="ul">
-        <table class="table table-striped">
-            <tr>
-                <th>Id</th>
+<div class="container mt-5">
+    <div class="ul table-responsive">
+        <table class="table table-striped table-bordered">
+            <tr class='table-primary'>
                 <th>Name</th>
                 <th>RegNo</th>
                 <th>Purpose</th>
@@ -24,13 +24,11 @@
             {% else %}
             {% for datas in data %}
             <tr>
-                <td>{{datas.fields.user}}</td>
-                <td>{{datas.fileds.name}}</td>
+                <td>{{datas.fields.name}}</td>
                 <td>{{datas.fields.regNo}}</td>
                 <td>{{datas.fields.purpose}}</td>
                 <td>{{datas.fields.phone_number}}</td>
-                {% load tz %}
-                <td>{{datas.fields.inTime|timezone:'Asia/Kolkata'}}</td>
+                <td>{{datas.fields.inTime}}</td>
                 <td>{{datas.fields.outTime}}</td>
                 {% if datas.fields.pending == 1 %}
                 <td class="text-primary">Pending...</td>

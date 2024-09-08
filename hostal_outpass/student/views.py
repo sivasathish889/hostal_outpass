@@ -3,7 +3,7 @@ from student.models import *
 from django.contrib.auth.hashers import make_password,check_password
 from django.core import serializers
 import json
-
+from django.contrib import messages
 
 def loginPage(request):
     if request.method == 'POST':
@@ -11,19 +11,20 @@ def loginPage(request):
         password = request.POST['password']
         regNo = RegisterModel.objects.filter(register_number=registerNumber)
         if not regNo:
-            print("You are not register..Please register")
-            return render(request, "student/loginPage.html", context={"messages" : "You are not register..Please register", "tags" : "warning"})
+            messages.error(request,message="You are not register..Please register")
+            return render(request, "student/loginPage.html", context={"messages" : "You are not register..Please register"})
         else:
             user = serializers.serialize('json', regNo)
             data = json.loads(user)
             db_pass = data[0]['fields']['password']
             hashpass = check_password(password, db_pass)
             if hashpass:
-                print("ok")
+                messages.success(request, "Login Successfully")
                 res =  redirect("index")
                 res.set_cookie('user', registerNumber)
                 return res
             else:
+                messages.warning(request,message='Password Incorrect')
                 print("password incorrect")
 
     return render(request, "student/loginPage.html")
@@ -54,16 +55,19 @@ def RegisterPage(request):
                     year = year,
                     password = password)
                 user.save()
-                return redirect('loginpage')
+                messages.success(request, message='Register Successfully')
+                return redirect('studentloginpage')
             else:
-                print("password Mismatched")
+                messages.warning(request,message="password Mismatched")
                 return render(request, "student/registerPage.html", context={"messages" : "password mismated", "tags" : "danger"})
         else:
-            print("User is already Registered")
+            messages.warning(request, message="User is already Registered")
+            return redirect('studentloginpage')
     
     return render(request, "student/registerPage.html")
 
 def logOut(request):
+    messages.success(request, message='Logout Successfully')
     res =  render(request,'student/loginpage.html')
     res.delete_cookie('user')
     return res
@@ -76,8 +80,7 @@ def indexPage(request):
         user = serializers.serialize('json', user)
         data = json.loads(user)
         db_pass = data[0]['fields'] 
-        
-        if db_pass['year']==1:
+        if db_pass['year'] == 1:
             years = 'First Year'
         elif db_pass['year'] == 2:
             years = 'Second Year'
@@ -85,10 +88,10 @@ def indexPage(request):
             years = 'Third Year'
         else:
             years = 'Final Year'
-        datas = RequestModel.objects.filter(regNo = regNo)
+            
+        datas = RequestModel.objects.filter(regNo = regNo,pending = 1).order_by('inTime').reverse()
         users = serializers.serialize('json', datas)
         dataa= json.loads(users)
-        print(dataa)
         return render(request, "student/index.html", context={
             "name" : db_pass['name'],
             'regNo' : db_pass['register_number'],
@@ -97,7 +100,7 @@ def indexPage(request):
             'parent_number' : db_pass['parent_number'],
             "data" : dataa
         })
-    return redirect('loginpage')
+    return redirect('studentloginpage')
 
 
 def request(request):
@@ -123,6 +126,14 @@ def request(request):
             outTime = outTime
         )
         req.save()
+        messages.success(request, message='Request send')
         return redirect('index')
-        
+            
     return render(request, 'student/request.html')
+
+def preRequest(request):
+    regNo = request.COOKIES['user']
+    datas = RequestModel.objects.filter(regNo = regNo,pending__in = [2,3]).order_by('inTime').reverse()
+    users = serializers.serialize('json', datas)
+    dataa= json.loads(users)
+    return render(request, 'student/preRequest.html', context={'reqData' : dataa})

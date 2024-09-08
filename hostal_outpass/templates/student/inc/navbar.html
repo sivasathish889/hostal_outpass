@@ -1,17 +1,26 @@
-<nav class=" bg-primary p-2 rounded d-flex justify-content-between ">
-
+<nav class=" bg-primary rounded d-flex justify-content-between ">
     <div>
-      <h4 class="brand">{{user| upper}}</h4>
+      <h4 class="brand p-2">{{name| upper}}</h4>
     </div>
     
   <div>
-    <ul class=" d-flex ">
-      <li class=" mr-4">
-        <a class=" btn btn-secondary"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" href="{% url "Request" %}">+ New Request </a>
+    <ul class=" d-flex p-2">
+      {% if reqData %}
+      <li class=" mr-4 ">
+        <a class=" btn btn-secondary "  class="btn btn-primary"  href="{% url "index" %}">Back</a>
       </li>
+      
+      {% else %}
+      <li class=" mr-4 ">
+        <a class=" btn btn-secondary "  class="btn btn-primary"  href="{% url "preRequest" %}">Pre Requests</a>
+      </li>
+      <li class=" mr-4 ">
+        <a class=" btn btn-success "  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" href="{% url "Request" %}">+ New Requests</a>
+      </li>  
       <li class="">
-        <a class=" btn btn-danger" href="{% url "logout" %}">Logout</a>
+        <a class=" btn btn-danger " href="{% url "studentlogout" %}">Logout</a>
       </li>
+      {% endif %}
     </ul>
   </div>
 
@@ -55,7 +64,7 @@
               </div>
 
               <div class="col-md-12 d-flex flex-column" >
-                <label for="distination">Distination : </label>
+                <label for="distination">Destination : </label>
                 <input type="text" name="distination"  required>
               </div>
 
@@ -80,7 +89,7 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Send message</button>
+            <button type="submit" class="btn btn-primary">Send Request</button>
           </div>
         </form>
       </div>

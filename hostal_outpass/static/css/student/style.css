@@ -11,3 +11,9 @@ body{
 li{
     list-style: none;
 }
+.alert{
+    position: absolute !important;
+    width: 30%;
+    right: 48px;
+    top: 10px;
+}

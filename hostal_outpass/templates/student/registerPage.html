@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-{% comment %} {% include "./inc/messages.html" %} {% endcomment %}
+{% include "student/inc/messages.html" %}
 
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="form bg-primary rounded p-5">
@@ -83,7 +83,7 @@
                         <input type="password" class="form-control" name="pass2" id="email" placeholder="Confrim Password" required>
                       </div>
                 </div>
-                <h6>You already create account...! <a href="{% url "loginpage" %}" class="text-dark h5"> Login</a></h6>
+                <h6>You already create account...! <a href="{% url "studentloginpage" %}" class="text-dark h5"> Login</a></h6>
                 <div class=" text-center mt-2">
                     <button type="submit" class="btn btn-success">Sign in</button>
                 </div>

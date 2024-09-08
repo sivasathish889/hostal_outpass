@@ -1,11 +1,12 @@
 {% extends "./inc/base.html" %}
 {% block content %}
+{% include "student/inc/messages.html" %}
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="form bg-primary rounded p-5">
       <div class="head mb-4">
           <h1 class="text-center border-buttom">Login</h1>
       </div>
-        <form action="{% url "loginpage" %}" method="POST">
+        <form action="{% url "studentloginpage" %}" method="POST">
           
           <div class="form-group ">
             <label for="register_number">Register Number : </label>

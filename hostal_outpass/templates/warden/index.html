@@ -1,11 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>warden</h1>
-</body>
-</html>
+{% extends "warden/inc/base.html" %}
+{% block content %}
+{% include "warden/inc/messages.html" %}
+<header class='bg-primary d-flex p-3 justify-content-between'>
+    <div class="logo h5 ">Hello Warden!! </div>
+    <div class="logout">
+        <button class='btn btn-danger'><a href="{% url "logout" %}">Logout</a></button>
+    </div>
+</header>
+<section class='container'>
+    <div class='mt-4'>
+        <h5>Requests</h5>
+    </div>
+    <div class="table-responsive">
+        <table class='table text-center table-striped table-bordered'>
+            <thead>
+                <tr>
+                    <th class='table-primary h6 '>Name</th>
+                    <th class='table-primary h6 '>Register Number</th>
+                    <th class='table-primary h6 '>Purpose</th>
+                    <th class='table-primary h6 '>In Time</th>
+                    <th class='table-primary h6 '>Out Time</th>
+                    <th class='table-primary h6 '>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for datas in data %}
+                <tr>
+                    <td> {{datas.fields.name}} </td>
+                    <td> {{datas.fields.regNo}} </td>
+                    <td> {{datas.fields.purpose}} </td>
+                    <td> {{datas.fields.inTime}} </td>
+                    <td> {{datas.fields.outTime}} </td>
+                    <td>
+                        <a href="{% url "wardenAccept" datas.pk %}"><button class='btn btn-success'>Accept</button></a>
+                        <a href="{% url "wardenReject" datas.pk %}"><button class='btn btn-danger'>Reject</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock content %}

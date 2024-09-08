@@ -16,7 +16,7 @@ class RegisterModel(models.Model):
     district = models.CharField(max_length=100,blank=False, null=False)
     phone_number = models.BigIntegerField(blank=False, null=False)
     parent_number= models.BigIntegerField(blank=False, null=True)
-    year = models.PositiveSmallIntegerField(blank=False, null=True, choices=yearChoice)
+    year = models.PositiveSmallIntegerField(blank=False, null=True, choices=yearChoice, help_text='1-first_year, 2-second_year, 3-third_year, 4-final_year')
     email = models.EmailField( max_length=254,blank=False, null=False)
     password = models.CharField(max_length=200,blank=False, null=False)
     created_at = models.DateField( auto_now_add=True, blank=False,null=False)
@@ -26,6 +26,11 @@ class RegisterModel(models.Model):
         return self.name
     
 class RequestModel(models.Model):
+    class actionChoice(models.IntegerChoices):
+        Pending = 1, 'Pending'
+        Accept = 2, 'Accepted'
+        Reject = 3, 'Rejected'
+
     user = models.BigIntegerField(blank=False,null=False)
     regNo = models.BigIntegerField(blank=False,null=False)
     phone_number = models.BigIntegerField(blank=False,null=False)
@@ -33,7 +38,7 @@ class RequestModel(models.Model):
     purpose = models.CharField( max_length=150,blank=False, null=False)
     inTime = models.DateTimeField( blank=False,null=False)
     outTime = models.DateTimeField(blank=False,null=False)
-    pending = models.PositiveSmallIntegerField(choices= (("pending", 1),("accept", 2),("reject", 3)),default=1, help_text='1-pending, 2-accept, 3-reject')
+    pending = models.PositiveSmallIntegerField(choices = actionChoice,default=1, blank=False, null=True, help_text='1-pending, 2-accepted, 3-rejected')
     def __str__(self):
         return self.name
     
