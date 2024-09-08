@@ -4,6 +4,48 @@
 <title>Student</title>
 {% endblock title %}
 {% block content %}
-<h1>indexPage</h1>
+{% include "./inc/navbar.html" %}
+{% load tz %}
+<div class="container">
+    <div class="ul">
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>RegNo</th>
+                <th>Purpose</th>
+                <th>Phone Number</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Status</th>
+            </tr>
+            {% if data in data %}
+            <p>data Is Empty</p>
+            {% else %}
+            {% for datas in data %}
+            <tr>
+                <td>{{datas.fields.user}}</td>
+                <td>{{datas.fileds.name}}</td>
+                <td>{{datas.fields.regNo}}</td>
+                <td>{{datas.fields.purpose}}</td>
+                <td>{{datas.fields.phone_number}}</td>
+                {% load tz %}
+                <td>{{datas.fields.inTime|timezone:'Asia/Kolkata'}}</td>
+                <td>{{datas.fields.outTime}}</td>
+                {% if datas.fields.pending == 1 %}
+                <td class="text-primary">Pending...</td>
+                {% elif datas.fields.pending == 2 %}
+                <td class="text-success">Accepted</td>
+                {% else %}
+                <td class="text-danger">Rejected</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+            {% endif %}
+        </table>
+    </div>
+</div>
+
 {% endblock content %}
 

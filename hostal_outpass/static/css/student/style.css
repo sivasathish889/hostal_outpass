@@ -7,3 +7,7 @@ body{
 .head{
     border-bottom: 2px solid black;
 }
+
+li{
+    list-style: none;
+}

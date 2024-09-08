@@ -1,0 +1,20 @@
+{% extends "warden/inc/base.html" %}
+
+{% block content %}
+<div class="form">
+    <form action="{% url "wardenloginpage" %}">
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" >
+                </div>
+                <div class="col-md-6">
+                    <label for="password">Password</label>
+                    <input type="text" name="password" >
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
