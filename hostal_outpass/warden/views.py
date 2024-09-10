@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.core.serializers import serialize
 from django.contrib.auth import logout
 import json
+
+
 # Create your views here.
 def loginPage(request):
     if request.method == 'POST':
@@ -13,12 +15,10 @@ def loginPage(request):
         user = WardenRegisterModel.objects.filter(username=username, password = password)
         serializing = serialize('json', user)
         data = json.loads(serializing)
-        pk = data[0]['pk']
-        print(pk)
         if len(user) != 0:
             messages.success(request, message='Login Successfully')
             res = redirect('indexpage')
-            res.set_cookie('warden',pk)
+            res.set_cookie('warden',data[0]['pk'])
             return res
         else:
             messages.warning(request,message = "User Not Found")
@@ -44,6 +44,8 @@ def logOut(request):
 
 
 def wardenAccept(request,id):
+    user = WardenRegisterModel(pk=request.COOKIES['warden'])
+    print(user)
     RequestModel.objects.filter(pk=id).update(pending = 2)
     messages.success(request, message='Accpeted')
     return redirect('indexpage')

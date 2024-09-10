@@ -1,11 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>secuirty</h1>
-</body>
-</html>
+{% extends "security/inc/base.html" %}
+{% block content %}
+{% include "security/inc/navbar.html" %}
+
+<section class='container'>
+    <div class='mt-4'>
+        <h5>Requests</h5>
+    </div>
+    <div class="table-responsive">
+        <table class='table text-center table-striped table-bordered'>
+            <thead>
+                <tr>
+                    <th class='table-primary h6 '>Name</th>
+                    <th class='table-primary h6 '>Register Number</th>
+                    <th class='table-primary h6 '>Purpose</th>
+                    <th class='table-primary h6 '>In Time</th>
+                    <th class='table-primary h6 '>Out Time</th>
+                    <th class='table-primary h6 '>Status</th>
+                    <th class='table-primary h6 '>Action</th>
+                    <th class='table-primary h6 '>Gate In Timing</th>
+                    <th class='table-primary h6 '>Gate Out Timing</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for datas in data %}
+                <tr>
+                    <td> {{datas.fields.name}} </td>
+                    <td> {{datas.fields.regNo}} </td>
+                    <td> {{datas.fields.purpose}} </td>
+                    <td> {{datas.fields.inTime}} </td>
+                    <td> {{datas.fields.outTime}} </td>
+                    <td> {% if datas.fields.pending == 2 %}
+                            <span class="text-success">Accepted</span>
+                            {% elif datas.fields.pending == 1 %}
+                            <div class="text-primary">Pending</div>
+                            {% else %}
+                            <div class="text-danger">Rejected</div>
+                        {% endif %}</td>
+                    <td class="d-flex ">
+                        {% if datas.fields.gateInTime != NULL %}
+                        
+                        {% else %}
+                        <a href="{% url "outtimeregister" datas.pk %}"class="mr-3"><button class='btn btn-danger'>Out Time</button></a>
+                        {% endif %}
+                        {% if datas.fields.gateOutTime != NULL %}
+                        
+                        {% else %}
+                        <a href="{% url "intimeregister" datas.pk %}" ><button class='btn btn-success'>In Time</button></a>
+                        {% endif %}
+                        
+                    </td>
+                    <td>{{datas.fields.gateOutTime}} </td>
+                    <td>{{datas.fields.gateInTime}} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock content %}

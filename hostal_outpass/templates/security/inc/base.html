@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security</title>
+    <link rel="shortcut icon" href="{% static "images/student/hostel.png" %}" type="image/x-icon">
+    {% include 'security/inc/links.html' %}
+  </head>
+  <body>
+    {% block content %} {% endblock %} 
+    {% include "security/js/jsLinks.html" %}
+  </body>
+</html>

@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.utils.timezone import localtime
+
 # Create your models here.
 class RegisterModel(models.Model):
 
@@ -39,6 +40,11 @@ class RequestModel(models.Model):
     inTime = models.DateTimeField( blank=False,null=False)
     outTime = models.DateTimeField(blank=False,null=False)
     pending = models.PositiveSmallIntegerField(choices = actionChoice,default=1, blank=False, null=True, help_text='1-pending, 2-accepted, 3-rejected')
+    actionWarden = models.CharField(null=True, blank=False, max_length=50)
+    gateInTime = models.DateTimeField( blank=True, null=True)
+    gateOutTime = models.DateTimeField( blank=True, null=True)
+    outpassEnd = models.BooleanField(blank=False, null=False, default=0)
+    
     def __str__(self):
         return self.name
     

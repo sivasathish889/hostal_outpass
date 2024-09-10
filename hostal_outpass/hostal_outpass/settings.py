@@ -30,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student',
+    'warden',
     'security',
-    'warden'
 ]
 
 MIDDLEWARE = [
@@ -68,14 +68,22 @@ WSGI_APPLICATION = 'hostal_outpass.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# 'HOST' : 'bvpe7w43rjx33pucohrh-mysql.services.clever-cloud.com',
+# 'ENGINE': 'django.db.backends.mysql',
+# 'NAME' :   'bvpe7w43rjx33pucohrh',
+# 'USER' : 'uzrbzikun7roypcv',
+# 'PASSWORD' : 'NlSeLPmg7oyrhvaHTPod',
+# 'PORT' : '3306'
+
+
 DATABASES = {
      'default': {
-        'HOST' : 'bvpe7w43rjx33pucohrh-mysql.services.clever-cloud.com',
-        'ENGINE': 'mysql.connector.django',
-        'NAME' :   'bvpe7w43rjx33pucohrh',
-        'USER' : 'uzrbzikun7roypcv',
-        'PASSWORD' : 'NlSeLPmg7oyrhvaHTPod',
-        'PORT' : '3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' :   'hostal_outpass',
+        'USER' : 'root',
+        'PASSWORD' : 'password',
+        'HOST' : 'localhost',
+        'PORT' : '3308'
     }
 }
 
