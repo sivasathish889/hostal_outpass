@@ -27,10 +27,9 @@ class RegisterModel(models.Model):
         return self.name
     
 class RequestModel(models.Model):
-    class actionChoice(models.IntegerChoices):
-        1, 'Pending',
-        2, 'Accepted',
-        3, 'Rejected',
+    actionChoice= ( (1, 'Pending'),
+        (2, 'Accepted'),
+        (3, 'Rejected'))
 
     user = models.BigIntegerField(blank=False,null=False)
     regNo = models.BigIntegerField(blank=False,null=False)
@@ -39,7 +38,7 @@ class RequestModel(models.Model):
     purpose = models.CharField( max_length=150,blank=False, null=False)
     inTime = models.DateTimeField( blank=False,null=False)
     outTime = models.DateTimeField(blank=False,null=False)
-    pending = models.PositiveSmallIntegerField(choices = actionChoice,default=1, blank=False, null=True, help_text='1-pending, 2-accepted, 3-rejected')
+    pending = models.CharField(choices = actionChoice,default=1, blank=False, null=True, help_text='1-pending, 2-accepted, 3-rejected',max_length=100)
     actionWarden = models.CharField(null=True, blank=False, max_length=50)
     gateInTime = models.DateTimeField( blank=True, null=True)
     gateOutTime = models.DateTimeField( blank=True, null=True)

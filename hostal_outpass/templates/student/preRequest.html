@@ -21,9 +21,9 @@
             <td>{{datas.fields.phone_number}}</td>
             <td>{{datas.fields.inTime}}</td>
             <td>{{datas.fields.outTime}}</td>
-            {% if datas.fields.pending == 1 %}
+            {% if datas.fields.pending == '1' %}
             <td class="text-primary">Pending...</td>
-            {% elif datas.fields.pending == 2 %}
+            {% elif datas.fields.pending == '2' %}
             <td class="text-success">Accepted</td>
             {% else %}
             <td class="text-danger">Rejected</td>

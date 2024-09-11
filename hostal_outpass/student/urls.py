@@ -5,7 +5,7 @@ urlpatterns = [
     path("student/register/", RegisterPage, name="registerpage"),
     path("student/login/", loginPage, name='studentloginpage'),
     path("student/Request", request, name='Request'),
-    path('logout', logOut, name='studentlogout'),
+    path('student/logout', logOut, name='studentlogout'),
     path('student/preRequest/', preRequest, name='preRequest')
 
 ]

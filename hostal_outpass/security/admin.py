@@ -4,4 +4,4 @@ from security.models import *
 class secrityLoginAdmin(admin.ModelAdmin):
     list_display = ['username', 'phone_number']
 
-admin.site.register(securityLogin,secrityLoginAdmin)
+admin.site.register(securityLoginModel,secrityLoginAdmin)

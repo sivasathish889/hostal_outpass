@@ -2,8 +2,9 @@
 from django.urls import path
 from security.views import *
 urlpatterns = [
-    path('login/', wardenLogin, name='securityloginpage'),  
+    path('login/', securiryLogin, name='securityloginpage'),  
     path('',securityIndex, name='securityindexpage'),
-    path('<str:id>/', inTimeRegister, name="intimeregister"),
-    path('<str:id>/', outTimeRegister, name="outtimeregister")
+    path('inTimeRegister/<str:id>/', inTimeRegister, name="intimeregister"),
+    path('outTimeRegister/<str:id>/', outTimeRegister, name="outtimeregister"),
+    path("logout/", logOut, name="securitylogout")
 ]

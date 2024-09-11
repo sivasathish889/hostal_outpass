@@ -4,6 +4,8 @@ from django.contrib.auth.hashers import make_password,check_password
 from django.core import serializers
 import json
 from django.contrib import messages
+import jwt
+
 
 def loginPage(request):
     if request.method == 'POST':
@@ -11,8 +13,8 @@ def loginPage(request):
         password = request.POST['password']
         regNo = RegisterModel.objects.filter(register_number=registerNumber)
         if not regNo:
-            messages.error(request,message="You are not register..Please register")
-            return render(request, "student/loginPage.html", context={"messages" : "You are not register..Please register"})
+            messages.warning(request,message="You are not register..Please register")
+            return redirect('studentloginpage')
         else:
             user = serializers.serialize('json', regNo)
             data = json.loads(user)
@@ -21,11 +23,12 @@ def loginPage(request):
             if hashpass:
                 messages.success(request, "Login Successfully")
                 res =  redirect("index")
-                res.set_cookie('user', registerNumber)
+                token = jwt.encode(payload=data[0],algorithm="HS256",key="secretKey")
+                res.set_cookie('user', token)
                 return res
             else:
-                messages.warning(request,message='Password Incorrect')
-                print("password incorrect")
+                messages.warning(request ,message='Password Incorrect')
+                return redirect('studentloginpage')
 
     return render(request, "student/loginPage.html")
 
@@ -43,7 +46,7 @@ def RegisterPage(request):
         pass2 = request.POST['pass2']
         if not RegisterModel.objects.filter(register_number = register_number).exists():
             if pass1 == pass2:
-                password = make_password(pass1,)
+                password = make_password(pass1)
                 user = RegisterModel.objects.create(
                     name =name.upper(),
                     register_number = register_number,
@@ -75,7 +78,9 @@ def logOut(request):
 
 def indexPage(request):
     if "user" in request.COOKIES.keys():
-        regNo = request.COOKIES['user']
+        cookie = request.COOKIES['user']
+        decodeData = jwt.decode(cookie, key="secretKey", algorithms="HS256")
+        regNo = decodeData['fields']['register_number']
         user = RegisterModel.objects.filter(register_number = regNo)
         user = serializers.serialize('json', user)
         data = json.loads(user)
@@ -132,8 +137,11 @@ def request(request):
     return render(request, 'student/request.html')
 
 def preRequest(request):
-    regNo = request.COOKIES['user']
+    cookie = request.COOKIES['user']
+    decodeData = jwt.decode(cookie, key="secretKey", algorithms="HS256")
+    regNo = decodeData['fields']['register_number']
     datas = RequestModel.objects.filter(regNo = regNo,pending__in = [2,3]).order_by('inTime').reverse()
+    print(datas)
     users = serializers.serialize('json', datas)
     dataa= json.loads(users)
     return render(request, 'student/preRequest.html', context={'reqData' : dataa})

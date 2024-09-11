@@ -2,11 +2,11 @@
 {% block content %}
 {% include "security/inc/navbar.html" %}
 
-<section class='container'>
+<section class=''>
     <div class='mt-4'>
         <h5>Requests</h5>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive text-nowrap " style="font-size:14px;">
         <table class='table text-center table-striped table-bordered'>
             <thead>
                 <tr>
@@ -16,7 +16,10 @@
                     <th class='table-primary h6 '>In Time</th>
                     <th class='table-primary h6 '>Out Time</th>
                     <th class='table-primary h6 '>Status</th>
+                    {% if datas.fields.gateOutTime != NULL and  datas.fields.gateInTime != NULL%}
                     <th class='table-primary h6 '>Action</th>
+                    {% else %}
+                    {% endif %}</td>
                     <th class='table-primary h6 '>Gate In Timing</th>
                     <th class='table-primary h6 '>Gate Out Timing</th>
                 </tr>
@@ -29,28 +32,28 @@
                     <td> {{datas.fields.purpose}} </td>
                     <td> {{datas.fields.inTime}} </td>
                     <td> {{datas.fields.outTime}} </td>
-                    <td> {% if datas.fields.pending == 2 %}
+                    <td> {% if datas.fields.pending == '2' %}
                             <span class="text-success">Accepted</span>
-                            {% elif datas.fields.pending == 1 %}
+                            {% elif datas.fields.pending == '1' %}
                             <div class="text-primary">Pending</div>
                             {% else %}
                             <div class="text-danger">Rejected</div>
                         {% endif %}</td>
-                    <td class="d-flex ">
-                        {% if datas.fields.gateInTime != NULL %}
-                        
-                        {% else %}
-                        <a href="{% url "outtimeregister" datas.pk %}"class="mr-3"><button class='btn btn-danger'>Out Time</button></a>
-                        {% endif %}
-                        {% if datas.fields.gateOutTime != NULL %}
-                        
-                        {% else %}
-                        <a href="{% url "intimeregister" datas.pk %}" ><button class='btn btn-success'>In Time</button></a>
-                        {% endif %}
-                        
-                    </td>
-                    <td>{{datas.fields.gateOutTime}} </td>
-                    <td>{{datas.fields.gateInTime}} </td>
+                        <td>{{datas.fields.gateOutTime}} </td>
+                        <td>{{datas.fields.gateInTime}} </td>
+
+                        <td class="d-flex ">
+                        {% if datas.fields.gateOutTime != NULL %}    
+                            {% else %}
+                            <a href="{% url "outtimeregister" datas.pk %}"class="mr-3"><button class='btn btn-danger'>Out Time</button></a>
+                            {% endif %}
+
+                            {% if datas.fields.gateOutTime != NULL %} 
+                            {% else %}
+                            <a href="{% url "intimeregister" datas.pk %}" ><button class='btn btn-success'>In Time</button></a>  
+                            {% endif %}
+                        </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
