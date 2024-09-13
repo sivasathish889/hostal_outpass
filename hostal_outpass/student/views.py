@@ -117,6 +117,7 @@ def request(request):
         purpose = request.POST['purpose']
         inTime = request.POST['inTime']
         outTime = request.POST['outTime']
+        roomNo = request.POST['roomNo']
         user = RegisterModel.objects.filter(register_number = regNo)
         user = serializers.serialize('json', user)
         data = json.loads(user)
@@ -128,7 +129,8 @@ def request(request):
             name = name,
             purpose = purpose,
             inTime = inTime,
-            outTime = outTime
+            outTime = outTime,
+            roomNo = roomNo
         )
         req.save()
         messages.success(request, message='Request send')

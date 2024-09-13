@@ -8,11 +8,12 @@
 {% include "student/inc/messages.html" %}
 {% load tz %}
 <div class="container mt-5">
-    <div class="ul table-responsive">
+    <div class="ul table-responsive text-nowrap">
         <table class="table table-striped table-bordered">
             <tr class='table-primary'>
                 <th>Name</th>
                 <th>RegNo</th>
+                <th>Room No</th>
                 <th>Purpose</th>
                 <th>Phone Number</th>
                 <th>In Time</th>
@@ -26,13 +27,14 @@
             <tr>
                 <td>{{datas.fields.name}}</td>
                 <td>{{datas.fields.regNo}}</td>
-                <td>{{datas.fields.purpose}}</td>
+                <td>{{datas.fields.roomNo|upper}}</td>
+                <td>{{datas.fields.purpose|upper}}</td>
                 <td>{{datas.fields.phone_number}}</td>
                 <td>{{datas.fields.inTime}}</td>
                 <td>{{datas.fields.outTime}}</td>
-                {% if datas.fields.pending == 1 %}
+                {% if datas.fields.pending == '1' %}
                 <td class="text-primary">Pending...</td>
-                {% elif datas.fields.pending == 2 %}
+                {% elif datas.fields.pending == '2' %}
                 <td class="text-success">Accepted</td>
                 {% else %}
                 <td class="text-danger">Rejected</td>

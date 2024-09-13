@@ -1,3 +1,5 @@
 python == 3.12.3
 django == 5.1
 rsa
+whiteNoise
+pillow

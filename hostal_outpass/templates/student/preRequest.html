@@ -6,6 +6,7 @@
         <tr class='table-primary'>
             <th>Name</th>
             <th>RegNo</th>
+            <th>Room No</th>
             <th>Purpose</th>
             <th>Phone Number</th>
             <th>In Time</th>
@@ -15,9 +16,10 @@
         {% if reqData %}
         {% for datas in reqData %}
         <tr>
-            <td>{{datas.fields.name}}</td>
+            <td>{{datas.fields.name|upper}}</td>
             <td>{{datas.fields.regNo}}</td>
-            <td>{{datas.fields.purpose}}</td>
+            <td>{{datas.fields.roomNo|upper}}</td>
+            <td>{{datas.fields.purpose|upper}}</td>
             <td>{{datas.fields.phone_number}}</td>
             <td>{{datas.fields.inTime}}</td>
             <td>{{datas.fields.outTime}}</td>

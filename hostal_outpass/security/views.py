@@ -63,3 +63,8 @@ def logOut(request):
     res.delete_cookie('security')
     messages.success(request, message="Logout Successfully")
     return res
+
+
+def error_404(request,exception):
+    
+    return render(request, "404.html",status=404)

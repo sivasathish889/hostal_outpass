@@ -43,6 +43,7 @@ class RequestModel(models.Model):
     gateInTime = models.DateTimeField( blank=True, null=True)
     gateOutTime = models.DateTimeField( blank=True, null=True)
     outpassEnd = models.BooleanField(blank=False, null=False, default=0)
+    roomNo = models.CharField(blank=False,null=True,max_length=100)
     
     def __str__(self):
         return self.name

@@ -7,16 +7,17 @@
         <button class='btn btn-danger'><a href="{% url "logout" %}">Logout</a></button>
     </div>
 </header>
-<section class='container'>
+<section class='m-5'>
     <div class='mt-4'>
         <h5>Requests</h5>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive text-nowrap">
         <table class='table text-center table-striped table-bordered'>
             <thead>
                 <tr>
                     <th class='table-primary h6 '>Name</th>
                     <th class='table-primary h6 '>Register Number</th>
+                    <th class='table-primary h6 '>Room Number</th>
                     <th class='table-primary h6 '>Purpose</th>
                     <th class='table-primary h6 '>In Time</th>
                     <th class='table-primary h6 '>Out Time</th>
@@ -26,8 +27,9 @@
             <tbody>
                 {% for datas in data %}
                 <tr>
-                    <td> {{datas.fields.name}} </td>
-                    <td> {{datas.fields.regNo}} </td>
+                    <td> {{datas.fields.name|upper}} </td>
+                    <td> {{datas.fields.regNo|upper}} </td>
+                    <td> {{datas.fields.roomNo|upper}} </td>
                     <td> {{datas.fields.purpose}} </td>
                     <td> {{datas.fields.inTime}} </td>
                     <td> {{datas.fields.outTime}} </td>

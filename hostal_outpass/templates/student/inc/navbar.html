@@ -27,10 +27,10 @@
   </nav>
   
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered fs-xs">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Request</h5>
         <button type="button" class="btn-close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">X</button>
       </div>
       <div class="modal-body">
@@ -61,6 +61,11 @@
               <div class="col-md-12 d-flex flex-column" >
                 <label for="parent_number">Parent Number : </label>
                 <input type="number" name="parent_number"  value="{{parent_number}}" readonly="readonly">
+              </div>
+
+              <div class="col-md-12 d-flex flex-column" >
+                <label for="roomNo">Room NO : </label>
+                <input type="text" name="roomNo"  required>
               </div>
 
               <div class="col-md-12 d-flex flex-column" >
