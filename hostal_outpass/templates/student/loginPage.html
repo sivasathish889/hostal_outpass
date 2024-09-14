@@ -19,11 +19,15 @@
               <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your password" required>
             </div>
 
-            <h6>You dont Regsiter..Please Register <a href="{% url "registerpage" %}" class="text-secondary h5">Sign in</a></h6>
             
             {% csrf_token %}
             <div class=" text-center mt-3">
               <button type="submit" class="btn btn-success">Login</button>
+            </div>
+            <div>
+              <a href="{% url "forgetpassword" %}" class="text-dark"> Forget Password?</a>
+              <span class="text-light">or</span>
+              <a href="{% url "registerpage" %}" class="text-dark h5">Sign in</a>
             </div>
         </form>
     </div>
