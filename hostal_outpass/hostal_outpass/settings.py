@@ -98,13 +98,12 @@ DATABASES = {
 
 
 # SMPT
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sivasathish889@gmail.com'
+EMAIL_HOST_PASSWORD = 'atepasthwpccqzvv'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'rdxsathish96@gmail.com'
-EMAIL_HOST_PASSWORD = 'lvxfnsubstohlglg'
 
 
 # Password validation

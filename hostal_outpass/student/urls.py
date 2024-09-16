@@ -10,6 +10,7 @@ urlpatterns = [
     path('student/logout', logOut, name='studentlogout'),
     path('student/preRequest/', preRequest, name='preRequest'),
     path('student/forget-password',forget_password, name='forgetpassword'),
-    path('student/confirm-otp', confirm_OTP, name='confirmOTP')
+    path('student/confirm-otp', confirm_OTP, name='confirmOTP'),
+    path('student/change-password/', change_password, name='changePassword')
 
 ]

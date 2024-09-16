@@ -10,14 +10,21 @@ class RegisterModel(models.Model):
         2, "Second Year",
         3, "Third Year",
         4, "Final Year",
+    
+    MONTH_CHOICES = (
+    (1, "First Year"),
+    (2, "Second year"),
+    (3, "Third year"),
+    (4, "Final year"),
+    )
     id = models.BigAutoField(blank=False, primary_key=True)
     name = models.CharField(max_length=150, blank=False, null=False)
-    register_number = models.BigIntegerField(unique=True, blank=False, null=False)
+    register_number = models.CharField(unique=True, blank=False, null=False, max_length=255)
     department = models.CharField(max_length=150, blank=False, null=False )
     district = models.CharField(max_length=100,blank=False, null=False)
     phone_number = models.BigIntegerField(blank=False, null=False)
     parent_number= models.BigIntegerField(blank=False, null=True)
-    year = models.PositiveSmallIntegerField(blank=False, null=True, choices=yearChoice, help_text='1-first_year, 2-second_year, 3-third_year, 4-final_year')
+    year = models.CharField(blank=False, null=True, choices=MONTH_CHOICES, help_text='1-first_year, 2-second_year, 3-third_year, 4-final_year', max_length=150)
     email = models.EmailField( max_length=254,blank=False, null=False)
     password = models.CharField(max_length=200,blank=False, null=False)
     created_at = models.DateField( auto_now_add=True, blank=False,null=False)

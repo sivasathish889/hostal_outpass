@@ -46,7 +46,7 @@ def RegisterPage(request):
                 return render(request, "student/registerPage.html", context={"messages" : "password mismated", "tags" : "danger"})
         else:
             messages.warning(request, message="User is already Registered")
-            return redirect('studentloginpage')
+            return redirect('registerpage')
     
     return render(request, "student/registerPage.html")
 
@@ -95,17 +95,18 @@ def forget_password(request):
             return redirect('forgetpassword')
         else:
             # Generate random Otp
-            otp = random.randint(10000,99999)
+            otp = random.randint(100000,999999)
             to_mail = data[0]['fields']['email']
             # Email send 
             send_mail(
                 subject="Reset Passeword",
                 message=f"Your OTP is {otp}. This Is expierd in 5 minutes",
                 recipient_list = [to_mail],
-                from_email = EMAIL_HOST_USER
+                from_email = 'rdxsathish96@gmail.com',
+                fail_silently=True,
             )
             # hashing otp
-            hashOTP = jwt.encode(payload={'otp' : otp},key="secret_key", algorithm='HS256')
+            hashOTP = jwt.encode(payload={'otp' : otp,'regNo' : regNo},key="secret_key", algorithm='HS256')
             res = render(request, "student/confirmOTP.html", context= { "mail" : to_mail})
             # set Cookie in otp 
             res.set_cookie('otp', hashOTP, max_age=30000)
@@ -120,12 +121,15 @@ def confirm_OTP(request):
             if request.method == 'POST':
                 userOtp = request.POST['otp']
                 otp = decodeData['otp']
+                regNo = decodeData['regNo']
                 # check OTP
-                if userOtp == otp:
+                if int(otp)==int(userOtp):
                     messages.success(request, message="OTP verified")
-                    res =  render(request, "student/changePassword.html")
+                    res =  redirect("changePassword")
                     # delete otp cookie 
                     res.delete_cookie('otp')
+                    cookie_valid = jwt.encode(payload={"__otp_valid__" : "__otp_valid__", 'regNo' : regNo},algorithm='HS256', key='Cookie_valid')
+                    res.set_cookie('__otp_valid__', cookie_valid)
                     return res
                 else:
                     messages.warning(request, message="Incorrect OTP.")
@@ -134,6 +138,37 @@ def confirm_OTP(request):
         else:
             messages.warning(request, message="Your OTP is Expired. Please resend OTP")
             return redirect('forgetpassword')
+
+# Change Password
+def change_password(request):
+    if '__otp_valid__' in request.COOKIES.keys():
+        decode = jwt.decode(algorithms='HS256',key="Cookie_valid",jwt=request.COOKIES['__otp_valid__'])
+        valid = decode['__otp_valid__']
+        regNo = decode['regNo']
+        if valid == '__otp_valid__':
+            if request.method == 'POST':
+                new_pass = request.POST['new_pass']
+                
+                confirm_pass = request.POST['confirm_pass']
+                if new_pass == confirm_pass:
+                    hashPass = make_password(new_pass)
+                    RegisterModel.objects.filter(register_number=regNo).update(password = hashPass)
+                    messages.success(request, message="Password Changed")
+                    res =  redirect('studentloginpage') 
+                    res.delete_cookie('__otp_valid__')
+                    return res
+                else:
+                    messages.warning(request, message="Please Enter Same Password")
+                    return redirect('changePassword')
+
+        else:
+            messages.warning(request, message="Are You Cheating")
+    else:
+        messages.warning(request, message="Please Forget Password")
+        return redirect('forgetpassword')
+    
+    return render(request, 'student/changePassword.html')
+
 
 def logOut(request):
     messages.success(request, message='Logout Successfully')
@@ -156,11 +191,12 @@ def indexPage(request):
         data = json.loads(user)
         db_pass = data[0]['fields'] 
         # convert data for template
-        if db_pass['year'] == 1:
+        print(db_pass['year'])
+        if db_pass['year'] == '1':
             years = 'First Year'
-        elif db_pass['year'] == 2:
+        elif db_pass['year'] == '2':
             years = 'Second Year'
-        elif db_pass['year'] == 3:
+        elif db_pass['year'] == '3':
             years = 'Third Year'
         else:
             years = 'Final Year'
