@@ -90,9 +90,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME' :   'hostal_outpass',
         'USER' : 'root',
-        'PASSWORD' : 'password',
+        'PASSWORD' : 'root',
         'HOST' : 'localhost',
-        'PORT' : '3308'
+        'PORT' : '3306'
     }
 }
 

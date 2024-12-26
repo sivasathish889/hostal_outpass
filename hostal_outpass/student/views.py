@@ -252,6 +252,9 @@ def preRequest(request):
     decodeData = jwt.decode(cookie, key="secretKey", algorithms="HS256")
     regNo = decodeData['fields']['register_number']
     datas = RequestModel.objects.filter(regNo = regNo,pending__in = [2,3]).order_by('inTime').reverse()
-    users = serializers.serialize('json', datas)
-    dataa= json.loads(users)
-    return render(request, 'student/preRequest.html', context={'reqData' : dataa})
+    if(datas):
+        users = serializers.serialize('json', datas)
+        dataa= json.loads(users)
+        return render(request, 'student/preRequest.html', context={'reqData' : dataa})
+    else:
+        return redirect('/')
